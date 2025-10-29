@@ -35,53 +35,60 @@
     </div>
   </div>
 
-  <!-- Lightbox -->
-  <div id="lightbox" class="lightbox" onclick="closeLightbox()">
-    <span class="close">&times;</span>
-    <button class="prev" onclick="changeImage(-1); event.stopPropagation();">&#10094;</button>
-    <img id="lightbox-img" src="" alt="Full resolution image">
-    <button class="next" onclick="changeImage(1); event.stopPropagation();">&#10095;</button>
-  </div>
+<!-- Lightbox -->
+<div id="lightbox" class="lightbox" onclick="closeLightbox()">
+  <span class="close">&times;</span>
+  <div class="image-counter" id="image-counter">1 / 23</div>
+  <button class="prev" onclick="changeImage(-1); event.stopPropagation();">&#10094;</button>
+  <img id="lightbox-img" src="" alt="Full resolution image">
+  <button class="next" onclick="changeImage(1); event.stopPropagation();">&#10095;</button>
+</div>
 
   <script>
-    let currentImage = 1;
-    const totalImages = 23;
+let currentImage = 1;
+const totalImages = 23;
 
-    function openLightbox(imageNum) {
-      currentImage = imageNum;
-      document.getElementById('lightbox').style.display = 'flex';
-      document.getElementById('lightbox-img').src = `images/${imageNum}.jpg`;
+function openLightbox(imageNum) {
+  currentImage = imageNum;
+  document.getElementById('lightbox').style.display = 'flex';
+  document.getElementById('lightbox-img').src = `images/${imageNum}.jpg`;
+  updateCounter();
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').style.display = 'none';
+}
+
+function changeImage(direction) {
+  currentImage += direction;
+  
+  if (currentImage > totalImages) {
+    currentImage = 1;
+  } else if (currentImage < 1) {
+    currentImage = totalImages;
+  }
+  
+  document.getElementById('lightbox-img').src = `images/${currentImage}.jpg`;
+  updateCounter();
+}
+
+function updateCounter() {
+  document.getElementById('image-counter').textContent = `${currentImage} / ${totalImages}`;
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', function(e) {
+  const lightbox = document.getElementById('lightbox');
+  if (lightbox.style.display === 'flex') {
+    if (e.key === 'ArrowLeft') {
+      changeImage(-1);
+    } else if (e.key === 'ArrowRight') {
+      changeImage(1);
+    } else if (e.key === 'Escape') {
+      closeLightbox();
     }
-
-    function closeLightbox() {
-      document.getElementById('lightbox').style.display = 'none';
-    }
-
-    function changeImage(direction) {
-      currentImage += direction;
-      
-      if (currentImage > totalImages) {
-        currentImage = 1;
-      } else if (currentImage < 1) {
-        currentImage = totalImages;
-      }
-      
-      document.getElementById('lightbox-img').src = `images/${currentImage}.jpg`;
-    }
-
-    // Keyboard navigation
-    document.addEventListener('keydown', function(e) {
-      const lightbox = document.getElementById('lightbox');
-      if (lightbox.style.display === 'flex') {
-        if (e.key === 'ArrowLeft') {
-          changeImage(-1);
-        } else if (e.key === 'ArrowRight') {
-          changeImage(1);
-        } else if (e.key === 'Escape') {
-          closeLightbox();
-        }
-      }
-    });
+  }
+});
   </script>
 </body>
 </html>

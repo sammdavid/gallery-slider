@@ -140,3 +140,16 @@ h2 {
 .next {
   right: 30px;
 }
+
+.image-counter {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 18px;
+  color: #e5e5e5;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 10px 20px;
+  border-radius: 20px;
+  z-index: 1001;
+}
