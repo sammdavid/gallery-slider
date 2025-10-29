@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Horizontal Image Scroller</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="section">
+    <div class="scroller">
+      <img src="images/1.jpg" alt="Image 1" onclick="openLightbox(1)">
+      <img src="images/2.jpg" alt="Image 2" onclick="openLightbox(2)">
+      <img src="images/3.jpg" alt="Image 3" onclick="openLightbox(3)">
+      <img src="images/4.jpg" alt="Image 4" onclick="openLightbox(4)">
+      <img src="images/5.jpg" alt="Image 5" onclick="openLightbox(5)">
+      <img src="images/6.jpg" alt="Image 6" onclick="openLightbox(6)">
+      <img src="images/7.jpg" alt="Image 7" onclick="openLightbox(7)">
+      <img src="images/8.jpg" alt="Image 8" onclick="openLightbox(8)">
+      <img src="images/9.jpg" alt="Image 9" onclick="openLightbox(9)">
+      <img src="images/10.jpg" alt="Image 10" onclick="openLightbox(10)">
+      <img src="images/11.jpg" alt="Image 11" onclick="openLightbox(11)">
+      <img src="images/12.jpg" alt="Image 12" onclick="openLightbox(12)">
+      <img src="images/13.jpg" alt="Image 13" onclick="openLightbox(13)">
+      <img src="images/14.jpg" alt="Image 14" onclick="openLightbox(14)">
+      <img src="images/15.jpg" alt="Image 15" onclick="openLightbox(15)">
+      <img src="images/16.jpg" alt="Image 16" onclick="openLightbox(16)">
+      <img src="images/17.jpg" alt="Image 17" onclick="openLightbox(17)">
+      <img src="images/18.jpg" alt="Image 18" onclick="openLightbox(18)">
+      <img src="images/19.jpg" alt="Image 19" onclick="openLightbox(19)">
+      <img src="images/20.jpg" alt="Image 20" onclick="openLightbox(20)">
+      <img src="images/21.jpg" alt="Image 21" onclick="openLightbox(21)">
+      <img src="images/22.jpg" alt="Image 22" onclick="openLightbox(22)">
+      <img src="images/23.jpg" alt="Image 23" onclick="openLightbox(23)">
+    </div>
+  </div>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+    <span class="close">&times;</span>
+    <button class="prev" onclick="changeImage(-1); event.stopPropagation();">&#10094;</button>
+    <img id="lightbox-img" src="" alt="Full resolution image">
+    <button class="next" onclick="changeImage(1); event.stopPropagation();">&#10095;</button>
+  </div>
+
+  <script>
+    let currentImage = 1;
+    const totalImages = 23;
+
+    function openLightbox(imageNum) {
+      currentImage = imageNum;
+      document.getElementById('lightbox').style.display = 'flex';
+      document.getElementById('lightbox-img').src = `images/${imageNum}.jpg`;
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').style.display = 'none';
+    }
+
+    function changeImage(direction) {
+      currentImage += direction;
+      
+      if (currentImage > totalImages) {
+        currentImage = 1;
+      } else if (currentImage < 1) {
+        currentImage = totalImages;
+      }
+      
+      document.getElementById('lightbox-img').src = `images/${currentImage}.jpg`;
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+      const lightbox = document.getElementById('lightbox');
+      if (lightbox.style.display === 'flex') {
+        if (e.key === 'ArrowLeft') {
+          changeImage(-1);
+        } else if (e.key === 'ArrowRight') {
+          changeImage(1);
+        } else if (e.key === 'Escape') {
+          closeLightbox();
+        }
+      }
+    });
+  </script>
+</body>
+</html>
